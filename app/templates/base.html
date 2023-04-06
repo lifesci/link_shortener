@@ -2,38 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <style>
+        body {
+            background-color: #3d5467;
+            color: #f1edee;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16pt;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        #content {
+            text-align: center;
+        }
+        #logoutForm {
+            display: inline-block;
+        }
+        .navLink {
+            margin: 1em;
+        }
+        .savedLink {
+            margin: 1em;
+        }
+    </style>
     <title>Link Shortener</title>
 </head>
 <body>
-<div>
-    <a href="{{ url_for("shorten.shortener") }}">Link Shortener</a>
+<div id="header">
+    <a class="navLink" href="{{ url_for("shorten.shortener") }}">Link Shortener</a>
     {% if username %}
-        <a href="{{ url_for("profile.links") }}">Saved Links</a>
+        <a class="navLink" href="{{ url_for("profile.links") }}">Saved Links</a>
         <form id="logoutForm" action="{{ url_for("profile.logout") }}" method="POST">
-            <a href="#" id="logoutLink">Log Out</a>
+            <a class="navLink" href="#" id="logoutLink">Log Out</a>
         </form>
     {% else %}
-        <a href="{{ url_for("profile.login") }}">Log In</a>
-        <a href="{{ url_for("profile.register") }}">Register</a>
+        <a class="navLink" href="{{ url_for("profile.login") }}">Log In</a>
+        <a class="navLink" href="{{ url_for("profile.register") }}">Register</a>
     {% endif %}
 </div>
-
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <div>
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
-{% endwith %}
-
-<div>
+<div id="content">
     {% block content %} {% endblock %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div>
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% endwith %}
 </div>
-
 {% if username %}
     <script>
         const logoutLink = document.getElementById("logoutLink")

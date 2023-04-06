@@ -4,12 +4,10 @@
     <h1>Register</h1>
     <form action="{{ url_for("profile.register") }}" method="post">
         <div>
-            <label for="link">User Name: </label>
-            <input type="text" id="username" name="username" value="">
+            <input type="text" id="username" name="username" placeholder="username">
         </div>
         <div>
-            <label for="link">Password: </label>
-            <input type="text" id="password" name="password" value="">
+            <input type="text" id="password" name="password" placeholder="password">
         </div>
         <div>
             <input type="submit" value="Register">

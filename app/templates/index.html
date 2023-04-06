@@ -3,9 +3,12 @@
 {% block content %}
     <h1>Shorten a link!</h1>
     <form id="inputForm">
-        <label for="link">Link: </label>
-        <input type="text" id="link" name="link" value="">
-        <input type="submit" value="Shorten Link">
+        <div>
+            <input type="text" id="link" name="link" placeholder="link">
+        </div>
+        <div>
+            <input type="submit" value="Shorten Link">
+        </div>
     </form>
     <div id="result">
     </div>
