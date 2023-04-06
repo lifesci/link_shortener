@@ -17,6 +17,19 @@
         <a href="{{ url_for("profile.register") }}">Register</a>
     {% endif %}
 </div>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div>
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endwith %}
+
 <div>
     {% block content %} {% endblock %}
 </div>
