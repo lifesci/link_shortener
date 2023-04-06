@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Link Shortener</title>
+</head>
+<body>
+<div>
+    <a href="{{ url_for("shorten.shortener") }}">Link Shortener</a>
+    {% if username %}
+        <a href="{{ url_for("profile.links") }}">Saved Links</a>
+        <form id="logoutForm" action="{{ url_for("profile.logout") }}" method="POST">
+            <a href="#" id="logoutLink">Log Out</a>
+        </form>
+    {% else %}
+        <a href="{{ url_for("profile.login") }}">Log In</a>
+        <a href="{{ url_for("profile.register") }}">Register</a>
+    {% endif %}
+</div>
+<div>
+    {% block content %} {% endblock %}
+</div>
+
+{% if username %}
+    <script>
+        const logoutLink = document.getElementById("logoutLink")
+        const logoutForm = document.getElementById("logoutForm")
+        logoutLink.onclick = async e => {
+            e.preventDefault()
+            logoutForm.submit()
+        }
+    </script>
+{% endif %}
+</body>
+</html>

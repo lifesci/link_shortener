@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Shorten a link!</h1>
+    <form id="inputForm">
+        <label for="link">Link: </label>
+        <input type="text" id="link" name="link" value="">
+        <input type="submit" value="Shorten Link">
+    </form>
+    <div id="result">
+    </div>
+    <script>
+        const form = document.getElementById("inputForm")
+        form.onsubmit = async e => {
+            e.preventDefault()
+            const resultDiv = document.getElementById("result")
+            resultDiv.innerHTML = ""
+            const formData = new FormData(form)
+            const response = await fetch(
+                "{{ url_for("shorten.shortener") }}",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            )
+            if (response.status == 200) {
+                const result = await response.json()
+                const anchor = document.createElement("a")
+                anchor.setAttribute("href", `/${result.short_link}`)
+                anchor.innerText = `${window.location.origin}/${result.short_link}`
+                resultDiv.appendChild(anchor)
+            } else if (response.status == 400) {
+                resultDiv.innerText = "Invalid URL"
+            } else {
+                resultDiv.innerText = "Error generating short URL"
+            }
+        }
+    </script>
+{% endblock %}

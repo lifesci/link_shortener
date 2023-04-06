@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Your saved links</h1>
+    <ul>
+        {% for link in links %}
+        <li>
+            <a href="{{link.long_link}}">{{link.long_link}}</a>
+            &#8594;
+            <a href="{{url_for("shorten.reroute", short_link=link.short_link)}}">
+                {{url_for("shorten.reroute", short_link=link.short_link, external=True)}}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
