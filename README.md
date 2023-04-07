@@ -1,7 +1,7 @@
 # link_shortener
 
 ## Requirements
-- Python 3
+- Python 3.8
 - PostgreSQL
 
 ## Setup (with sample commands for linux users)

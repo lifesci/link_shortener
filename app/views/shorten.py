@@ -10,6 +10,11 @@ shorten = Blueprint("shorten", __name__)
 @verify_user
 @shorten.route('/', methods=["GET", "POST"])
 def shortener():
+    """Generate short link for URL if one does not already exist.
+    If an integrity error occurs, this means that a either short link
+    already exists, or there was a collision. In either case, retry a
+    fixed number of times. If unsuccessful, send 500.
+    """
     if request.method == "POST":
         input_link = request.form.get("link")
         if not validate_url(input_link):
@@ -46,6 +51,7 @@ def shortener():
 
 @shorten.route("/<short_link>", methods=["GET"])
 def reroute(short_link):
+    """Redirect to URL corresponding to short link"""
     link = Link.query.filter_by(short_link=short_link).one_or_none()
     if not link:
         flash("Unable to follow unrecognized short link")
