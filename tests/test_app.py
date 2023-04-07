@@ -56,28 +56,28 @@ class ProfileViewTest(APITest):
 
 class ShortenViewTest(APITest):
     def test_shorten_link(self):
-        response = self.test_client.post("/", data={"link": "http://test.com"})
+        response = self.test_client.post("/", data={"link": "http://test.test"})
         short_link = json.loads(response.get_data(as_text=True))["short_link"]
         match = re.search("^[a-zA-Z0-9]{8}$", short_link)
         self.assertIsNotNone(match)
 
         with self.app.app_context():
-            link = Link.query.get("http://test.com")
+            link = Link.query.get("http://test.test")
             self.assertIsNotNone(link)
 
     def test_shorten_link_logged_in(self):
         self.login_user("test")
 
-        self.test_client.post("/", data={"link": "http://test.com"})
+        self.test_client.post("/", data={"link": "http://test.test"})
 
         with self.app.app_context():
-            userlink = UserLink.query.get(("test", "http://test.com"))
+            userlink = UserLink.query.get(("test", "http://test.test"))
             self.assertIsNotNone(userlink)
 
     def test_reroute(self):
-        shorten_response = self.test_client.post("/", data={"link": "http://test.com"})
+        shorten_response = self.test_client.post("/", data={"link": "http://test.test"})
         short_link = json.loads(shorten_response.get_data(as_text=True))["short_link"]
 
         reroute_response = self.test_client.get(f"/{short_link}")
         self.assertEqual(reroute_response.status_code, 302)
-        self.assertEqual(reroute_response.location, "http://test.com")
+        self.assertEqual(reroute_response.location, "http://test.test")
