@@ -1,12 +1,12 @@
 import string
 import random
 from urllib.parse import urlparse
-from app.constants import MAX_URL_DISPLAY_LENGTH
+from app.constants import SHORT_CODE_LENGTH, MAX_URL_DISPLAY_LENGTH
 
 def create_short_link():
     """Generate random alphanumeric short code"""
     chars = string.ascii_uppercase + string.ascii_lowercase + string.digits
-    code = "".join([random.choice(chars) for _ in range(8)])
+    code = "".join([random.choice(chars) for _ in range(SHORT_CODE_LENGTH)])
     return code
 
 def validate_url(url):
