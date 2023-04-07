@@ -5,10 +5,10 @@
     <ul>
         {% for link in links %}
         <li class="savedLink">
-            <a href="{{link.long_link}}">{{link.long_link}}</a>
+            <a href="{{ link["long"] }}">{{ link["long_truncated"] }}</a>
             &#8594;
-            <a href="{{url_for("shorten.reroute", short_link=link.short_link)}}">
-                {{url_for("shorten.reroute", short_link=link.short_link, _external=True)}}
+            <a href="{{ link["short"] }}">
+                {{ link["short_truncated"] }}
             </a>
         </li>
         {% endfor %}

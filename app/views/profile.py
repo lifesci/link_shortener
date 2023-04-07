@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, session, redirect, url_fo
 from sqlalchemy import exc, text
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.auth import verify_user, validate_user_fields
+from app.helpers import truncate_url
 from app.models import db, User
 
 profile = Blueprint("profile", __name__)
@@ -84,5 +85,14 @@ def links():
         where username = :username
     """)
 
-    links = db.session.execute(query, {"username": session["username"]}).fetchall()
+    raw_links = db.session.execute(query, {"username": session["username"]}).fetchall()
+    links = [
+        {
+            "long": link.long_link,
+            "short": url_for("shorten.reroute", short_link=link.short_link, _external=True),
+            "long_truncated": truncate_url(link.long_link),
+            "short_truncated": truncate_url(url_for("shorten.reroute", short_link=link.short_link, _external=True))
+        }
+        for link in raw_links
+    ]
     return render_template("links.html", links=links, username=session.get("username"))
