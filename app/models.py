@@ -8,7 +8,7 @@ class User(db.Model):
 
 class Link(db.Model):
     long_link = db.Column(db.Text, primary_key=True)
-    short_link = db.Column(db.String(10), unique=True)
+    short_link = db.Column(db.Text, unique=True)
 
 class UserLink(db.Model):
     username = db.Column(db.Text, db.ForeignKey(User.username), primary_key=True)
